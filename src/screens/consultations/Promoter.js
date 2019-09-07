@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ImageBackground, Keyboard, TouchableHighlight }
 import { connect } from 'react-redux';
 import { } from './../../actions/AppAction';
 
-export class CardFee extends Component {
+export class Promoter extends Component {
 
     constructor(props) {
         super(props);
@@ -40,5 +40,5 @@ const mapStateToProps = state => {
     };
 };
 
-const CardFeeConnect = connect(mapStateToProps, {})(CardFee);
-export default CardFeeConnect;
+const PromoterConnect = connect(mapStateToProps, {})(Promoter);
+export default PromoterConnect;

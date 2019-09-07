@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ImageBackground, Keyboard } from 'react-native'
 import { connect } from 'react-redux';
 import { StackActions, NavigationActions } from 'react-navigation';
 
-export default class Preload extends Component {
+export class Preload extends Component {
 
     constructor(props) {
         super(props);

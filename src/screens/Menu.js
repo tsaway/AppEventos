@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Keyboard } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, Keyboard, TouchableHighlight, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { StackActions, NavigationActions } from 'react-navigation';
+import { } from './../actions/AppAction';
 
-export default class Menu extends Component {
+export class Menu extends Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +14,18 @@ export default class Menu extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.txtTitle}>MENU</Text>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('EventRegistration')}>
+                    <Text>Cadastro do Evento</Text>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('ReleasesTab')}>
+                    <Text>Lançamentos</Text>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('ConsultationsTab')}>
+                    <Text>Consultas</Text>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('SettingsTab')}>
+                    <Text>Configurações</Text>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -36,7 +47,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-
+        teste: state.app.teste
     };
 };
 

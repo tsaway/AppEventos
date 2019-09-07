@@ -5,14 +5,18 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import Reducer from './src/dependencias/Reducer';
+import Reducers from './src/Reducers';
 
 //variables
-let store = createStore(Reducer, applyMiddleware(ReduxThunk));
+let store = createStore(Reducers, applyMiddleware(ReduxThunk));
 
 //imports screens
 import Preload from './src/screens/Preload';
 import Menu from './src/screens/Menu';
+import EventRegistration from './src/screens/registerEvent/EventRegistration';
+import ReleasesTab from './src/screens/releases/ReleasesTab';
+import ConsultationsTab from './src/screens/consultations/ConsultationsTab';
+import SettingsTab from './src/screens/settings/SettingsTab';
 
 const Browser = createStackNavigator({
   Preload: {
@@ -26,7 +30,21 @@ const Browser = createStackNavigator({
     navigationOptions: {
       header: null
     }
+  },
+  EventRegistration: {
+    screen: EventRegistration
+  },
+  ReleasesTab: {
+    screen: ReleasesTab
+  },
+  ConsultationsTab: {
+    screen: ConsultationsTab
+  },
+  SettingsTab: {
+    screen: SettingsTab
   }
+}, {
+  initialRouteName: 'Menu'
 });
 
 const BrowserMain = createAppContainer(Browser);

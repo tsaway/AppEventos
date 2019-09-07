@@ -5,8 +5,8 @@ const initialState = {
 
 const AppReducer = (state = initialState, action) => {
 
-    return state;
 
+    return state;
 };
 
 export default AppReducer;
