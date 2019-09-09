@@ -1,19 +1,23 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Keyboard, TouchableHighlight } from 'react-native';
-import { connect } from 'react-redux';
+//imports libraries/API's
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { } from './../../actions/AppAction';
 
+//imports screens
 import CardFee from './CardFee';
 import ExpensesRegisted from './ExpensesRegisted';
 
 const TabNavigator = createBottomTabNavigator({
     CardFee: {
-        screen: CardFee
+        screen: CardFee,
+        navigationOptions: {
+            title: 'Taxas'
+        }
     },
     ExpensesRegisted: {
-        screen: ExpensesRegisted
+        screen: ExpensesRegisted,
+        navigationOptions: {
+            title: 'Despesas'
+        }
     }
 });
 

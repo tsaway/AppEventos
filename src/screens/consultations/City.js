@@ -1,7 +1,7 @@
+//imports libraries/API's
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Keyboard, TouchableHighlight } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { } from './../../actions/AppAction';
 
 export class City extends Component {
 

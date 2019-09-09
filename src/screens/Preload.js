@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Keyboard } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { StackActions, NavigationActions } from 'react-navigation';
 
 export class Preload extends Component {
 

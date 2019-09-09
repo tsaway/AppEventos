@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Keyboard, TouchableHighlight } from 'react-native';
-import { connect } from 'react-redux';
+//imports libraries/API's
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { } from './../../actions/AppAction';
 
+//imports screens
 import Period from './Period';
 import City from './City';
 import Promoter from './Promoter';

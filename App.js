@@ -32,16 +32,28 @@ const Browser = createStackNavigator({
     }
   },
   EventRegistration: {
-    screen: EventRegistration
+    screen: EventRegistration,
+    navigationOptions: {
+      title: 'Cadastro do Evento'
+    }
   },
   ReleasesTab: {
-    screen: ReleasesTab
+    screen: ReleasesTab,
+    navigationOptions: {
+      title: 'Lançamentos'
+    }
   },
   ConsultationsTab: {
-    screen: ConsultationsTab
+    screen: ConsultationsTab,
+    navigationOptions: {
+      title: 'Consultas'
+    }
   },
   SettingsTab: {
-    screen: SettingsTab
+    screen: SettingsTab,
+    navigationOptions: {
+      title: 'Configurações'
+    }
   }
 }, {
   initialRouteName: 'Menu'

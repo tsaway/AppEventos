@@ -1,7 +1,7 @@
+//imports libraries/API's
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Keyboard, TouchableHighlight, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import { } from './../actions/AppAction';
 
 export class Menu extends Component {
 
@@ -14,16 +14,20 @@ export class Menu extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('EventRegistration')}>
+                <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate('EventRegistration')}>
                     <Text>Cadastro do Evento</Text>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('ReleasesTab')}>
+                <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate('ReleasesTab')}>
                     <Text>Lançamentos</Text>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('ConsultationsTab')}>
+                <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate('ConsultationsTab')}>
                     <Text>Consultas</Text>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('SettingsTab')}>
+                <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate('SettingsTab')}>
                     <Text>Configurações</Text>
                 </TouchableHighlight>
             </View>
