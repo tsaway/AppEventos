@@ -1,13 +1,12 @@
 //imports libraries/API's
-import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
 
 export class Expenses extends Component {
-
     constructor(props) {
-        super(props);
-        this.state = {};
+        super(props)
+        this.state = {}
 
     }
 
@@ -16,7 +15,7 @@ export class Expenses extends Component {
             <View style={styles.container}>
                 <Text>Expenses</Text>
             </View>
-        );
+        )
     }
 }
 
@@ -26,19 +25,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
 
-    },
-    txtTitle: {
-        color: '#000000',
-        fontSize: 24
-
     }
-});
+})
 
 const mapStateToProps = state => {
     return {
 
-    };
-};
+    }
+}
 
-const ExpensesConnect = connect(mapStateToProps, {})(Expenses);
-export default ExpensesConnect;
+const ExpensesConnect = connect(mapStateToProps, {})(Expenses)
+export default ExpensesConnect

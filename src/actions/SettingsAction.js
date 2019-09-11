@@ -1,17 +1,14 @@
 //imports libraries/API's
-import { Alert, Keyboard } from 'react-native';
-import firebase from './../../dep/firebase/FirebaseConnection';
-
-//---------------------------------------- settings ----------------------------------------//
+import { Alert, Keyboard } from 'react-native'
+import firebase from './../../dep/firebase/FirebaseConnection'
 
 //enviar as taxas de cartão para o firebase
 export const SendCardFee = (cred, deb, callback) => {
     return () => {
         let dir = firebase.database().ref('app').child('dataDefault').child('cardFee');
-
         let credit = cred.replace(',', '.')
-        credit = parseFloat(credit)
         let debit = deb.replace(',', '.')
+        credit = parseFloat(credit)
         debit = parseFloat(debit)
 
         if (cred != '' && deb != '') {
@@ -30,24 +27,22 @@ export const SendCardFee = (cred, deb, callback) => {
                     }
                 },
             ])
-        } else {
-            Alert.alert('Aviso', 'Preencha todos os campos')
-        }
+        } else Alert.alert('Aviso', 'Preencha todos os campos')
     }
 }
 
 //pegar os dados dos ultimos reajustes das taxas de crédito e débito do firebase
 export const GetCardFee = callback => {
     return () => {
-        let dir = firebase.database().ref('app').child('dataDefault').child('cardFee');
+        let dir = firebase.database().ref('app').child('dataDefault').child('cardFee')
 
         dir.on('value', snapshot => {
             let cred = snapshot.val().credit
             let deb = snapshot.val().debit
+            let credit = cred.toString()
+            let debit = deb.toString()
 
-            var credit = cred.toString()
             credit = credit.replace('.', ',') + '%'
-            var debit = deb.toString()
             debit = debit.replace('.', ',') + '%'
             callback(credit, debit)
         })
@@ -75,9 +70,7 @@ export const NewExpenses = (name, callback) => {
                     }
                 },
             ])
-        } else {
-            Alert.alert('Aviso', 'Preencha todos os campos')
-        }
+        } else Alert.alert('Aviso', 'Preencha todos os campos')
 
     }
 }
@@ -105,7 +98,7 @@ export const GetListExpenses = callback => {
 export const DeleteItemExpenses = key => {
     return () => {
         Alert.alert('Aviso', 'Tem certeza que quer fazer isto?', [
-            { text: 'Não', onPress: () => callback() },
+            { text: 'Não' },
             {
                 text: 'Sim, estou ciente', onPress: () => firebase.database().ref('app')
                     .child('dataDefault').child('expensesRegisted').child(key).remove()

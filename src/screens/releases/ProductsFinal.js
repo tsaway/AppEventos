@@ -1,13 +1,12 @@
 //imports libraries/API's
-import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
 
 export class ProductsFinal extends Component {
-
     constructor(props) {
-        super(props);
-        this.state = {};
+        super(props)
+        this.state = {}
 
     }
 
@@ -16,7 +15,7 @@ export class ProductsFinal extends Component {
             <View style={styles.container}>
                 <Text>ProductsFinal</Text>
             </View>
-        );
+        )
     }
 }
 
@@ -26,19 +25,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
 
-    },
-    txtTitle: {
-        color: '#000000',
-        fontSize: 24
-
     }
-});
+})
 
 const mapStateToProps = state => {
     return {
 
-    };
-};
+    }
+}
 
-const ProductsFinalConnect = connect(mapStateToProps, {})(ProductsFinal);
-export default ProductsFinalConnect;
+const ProductsFinalConnect = connect(mapStateToProps, {})(ProductsFinal)
+export default ProductsFinalConnect

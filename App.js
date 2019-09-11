@@ -1,22 +1,25 @@
 //imports libraries/API's
-import React, { Component } from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
-import Reducers from './src/Reducers';
+import React, { Component } from 'react'
+import { View, Image } from 'react-native'
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import ReduxThunk from 'redux-thunk'
+
+//imports files
+import Reducers from './src/Reducers'
 
 //variables
-let store = createStore(Reducers, applyMiddleware(ReduxThunk));
+let store = createStore(Reducers, applyMiddleware(ReduxThunk))
 
 //imports screens
-import Preload from './src/screens/Preload';
-import Menu from './src/screens/Menu';
-import EventRegistration from './src/screens/registerEvent/EventRegistration';
-import ReleasesTab from './src/screens/releases/ReleasesTab';
-import ConsultationsTab from './src/screens/consultations/ConsultationsTab';
-import SettingsTab from './src/screens/settings/SettingsTab';
+import Preload from './src/screens/Preload'
+import Menu from './src/screens/Menu'
+import EventRegistration from './src/screens/registerEvent/EventRegistration'
+import ReleasesTab from './src/screens/releases/ReleasesTab'
+import QueryTab from './src/screens/query/QueryTab'
+import SettingsTab from './src/screens/settings/SettingsTab'
 
 const Browser = createStackNavigator({
   Preload: {
@@ -34,32 +37,92 @@ const Browser = createStackNavigator({
   EventRegistration: {
     screen: EventRegistration,
     navigationOptions: {
-      title: 'Cadastro do Evento'
+      title: 'Cadastro do Evento',
+      headerTitleStyle: {
+        flex: 1,
+        color: '#FFF'
+      },
+      headerStyle: {
+        backgroundColor: '#414CCD'
+      },
+      headerBackImage: () => (
+        <View>
+          <Image
+            source={require('./src/assets/images/icons/arrow/arrow-back3.png')}
+            style={{ width: 16.2, height: 25.2 }}
+          />
+        </View>
+      )
     }
   },
   ReleasesTab: {
     screen: ReleasesTab,
     navigationOptions: {
-      title: 'Lançamentos'
+      title: 'Lançamentos',
+      headerTitleStyle: {
+        flex: 1,
+        color: '#FFF'
+      },
+      headerStyle: {
+        backgroundColor: '#414CCD'
+      },
+      headerBackImage: () => (
+        <View>
+          <Image
+            source={require('./src/assets/images/icons/arrow/arrow-back3.png')}
+            style={{ width: 16.2, height: 25.2 }}
+          />
+        </View>
+      )
     }
   },
-  ConsultationsTab: {
-    screen: ConsultationsTab,
+  QueryTab: {
+    screen: QueryTab,
     navigationOptions: {
-      title: 'Consultas'
+      title: 'Consultas',
+      headerTitleStyle: {
+        flex: 1,
+        color: '#FFF'
+      },
+      headerStyle: {
+        backgroundColor: '#414CCD'
+      },
+      headerBackImage: () => (
+        <View>
+          <Image
+            source={require('./src/assets/images/icons/arrow/arrow-back3.png')}
+            style={{ width: 16.2, height: 25.2 }}
+          />
+        </View>
+      )
     }
   },
   SettingsTab: {
     screen: SettingsTab,
     navigationOptions: {
-      title: 'Configurações'
+      title: 'Configurações',
+      headerTitleStyle: {
+        flex: 1,
+        color: '#FFF'
+      },
+      headerStyle: {
+        backgroundColor: '#414CCD'
+      },
+      headerBackImage: () => (
+        <View>
+          <Image
+            source={require('./src/assets/images/icons/arrow/arrow-back3.png')}
+            style={{ width: 16.2, height: 25.2 }}
+          />
+        </View>
+      )
     }
   }
 }, {
-  initialRouteName: 'Menu'
-});
+  // initialRouteName: 'EventRegistration'
+})
 
-const BrowserMain = createAppContainer(Browser);
+const BrowserMain = createAppContainer(Browser)
 
 export default class App extends Component {
   render() {
@@ -67,6 +130,6 @@ export default class App extends Component {
       <Provider store={store}>
         <BrowserMain />
       </Provider>
-    );
+    )
   }
 }

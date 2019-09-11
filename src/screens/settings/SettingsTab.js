@@ -1,24 +1,35 @@
 //imports libraries/API's
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 //imports screens
-import CardFee from './CardFee';
-import ExpensesRegisted from './ExpensesRegisted';
+import CardFee from './CardFee'
+import ExpensesRegisted from './ExpensesRegisted'
 
 const TabNavigator = createBottomTabNavigator({
     CardFee: {
         screen: CardFee,
         navigationOptions: {
-            title: 'Taxas'
+            tabBarLabel: 'Taxas'
         }
     },
     ExpensesRegisted: {
         screen: ExpensesRegisted,
         navigationOptions: {
-            title: 'Despesas'
+            tabBarLabel: 'Despesas'
         }
     }
-});
+}, {
+    tabBarOptions: {
+        tabStyle: {
+            backgroundColor: '#414CCD'
+        },
+        activeTintColor: '#FFF',
+        inactiveTintColor: '#000',
+        labelStyle: {
+            fontSize: 20
+        }
+    }
+})
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(TabNavigator)
