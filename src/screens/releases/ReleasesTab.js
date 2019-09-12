@@ -23,7 +23,7 @@ const TabNavigator = createBottomTabNavigator({
     ProductsFinal: {
         screen: ProductsFinal,
         navigationOptions: {
-            tabBarLabel: 'Produtos finais'
+            tabBarLabel: 'Produtos'
         }
     }
 }, {

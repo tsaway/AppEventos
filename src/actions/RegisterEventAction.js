@@ -90,7 +90,8 @@ export const RegisterEvent = (name, city, estado, promoter, dateInitial, dateFin
                         }
                     })
                     if (control != 1 && validationPromoter != 1) await dir.child('dataDefault')
-                        .child('promoter').child(rash).set({ promoter: promoterInput }).catch(e => {
+                        .child('promoter').child(rash).set({ promoter: promoterInput })
+                        .catch(e => {
                             callbackSpinner()
                             Alert.alert('Error - Relate ao desenvolvedor', `Error: ${e}`)
                         })
@@ -112,6 +113,7 @@ export const RegisterEvent = (name, city, estado, promoter, dateInitial, dateFin
                         promoter: promoterInput,
                         dateInitial,
                         dateFinal,
+                        releases: 'expenses, sales, productsFinal'
                     })
                         .then(() => {
                             Keyboard.dismiss()
@@ -186,6 +188,7 @@ export const GetDataDefault = callback => {
     }
 }
 
+//aviso para enviar os dados
 export const SendDataDefault = callback => {
     return () => {
         Alert.alert('Aviso', 'Deseja adicionar esses dados?', [

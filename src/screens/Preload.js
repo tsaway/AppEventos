@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { StackActions, NavigationActions } from 'react-navigation'
 
 //imports files
-import { ListinerEventActive } from './../actions/PreloadAction'
+import { ListinerEventActive, GetExpensesRegisted } from './../actions/PreloadAction'
 
 export class Preload extends Component {
     componentDidMount() {
@@ -38,5 +38,5 @@ const mapStateToProps = state => {
     }
 }
 
-const PreloadConnect = connect(mapStateToProps, { ListinerEventActive })(Preload)
+const PreloadConnect = connect(mapStateToProps, { ListinerEventActive, GetExpensesRegisted })(Preload)
 export default PreloadConnect

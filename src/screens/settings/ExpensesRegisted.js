@@ -9,14 +9,14 @@ import { connect } from 'react-redux'
 import { NewExpenses, GetListExpenses, DeleteItemExpenses } from './../../actions/SettingsAction'
 
 //imports components
-import ExpensesItem from './components/ExpensesItem'
+import ExpensesRegistedItem from './components/ExpensesRegistedItem'
 
 export class ExpensesRegisted extends Component {
     constructor(props) {
         super(props)
         this.state = {
             name: '',
-            modalVisible: false,
+            isModalVisible: false,
             list: []
         }
     }
@@ -38,16 +38,16 @@ export class ExpensesRegisted extends Component {
                     <TouchableHighlight
                         onPress={() => this.props.GetListExpenses(list => this.setState({
                             list: list,
-                            modalVisible: true
+                            isModalVisible: true
                         }))} underlayColor='#5FC7EA' style={styles.btn}>
                         <Text style={styles.txtBtn}>Listar despesas</Text>
                     </TouchableHighlight>
                 </View>
                 {/* --------------- Modal Listar despesas --------------- */}
-                <Modal animationType='slide' visible={this.state.modalVisible}>
+                <Modal animationType='slide' visible={this.state.isModalVisible}>
                     <View style={styles.exit}>
                         <TouchableHighlight
-                            onPress={() => this.setState({ modalVisible: false })}
+                            onPress={() => this.setState({ isModalVisible: false })}
                             underlayColor='transparent'>
                             <Text style={{ fontSize: 18 }}>X</Text>
                         </TouchableHighlight>
@@ -59,7 +59,7 @@ export class ExpensesRegisted extends Component {
                         <FlatList
                             data={this.state.list}
                             renderItem={({ item }) =>
-                                <ExpensesItem data={item}
+                                <ExpensesRegistedItem data={item}
                                     deleteItem={this.props.DeleteItemExpenses} />}
                         />
                     </View>

@@ -5,7 +5,7 @@ import {
 import { connect } from 'react-redux'
 import { RegisterEvent, GetDataDefault, SendDataDefault } from './../../actions/RegisterEventAction'
 import { StackActions, NavigationActions } from 'react-navigation'
-import DateTimePicker from "react-native-modal-datetime-picker"
+import DateTimePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
 import Spinner from 'react-native-loading-spinner-overlay'
 export class EventRegistration extends Component {
@@ -84,9 +84,9 @@ export class EventRegistration extends Component {
                     <TextInput placeholderTextColor='#9b9b9b' value={this.state.promoter}
                         style={styles.input} placeholder='Promotora:'
                         onChangeText={(txt) => this.setState({ promoter: txt })} />
-                    <TouchableHighlight style={styles.btnDate}
+                    <TouchableHighlight underlayColor='#9b9b9b' style={styles.btnDate}
                         onPress={() => this.setState({ isDateInitialVisible: true })}>
-                        <Text>{this.state.selectedDateInitial}</Text>
+                        <Text style={{ fontSize: 16 }}>{this.state.selectedDateInitial}</Text>
                     </TouchableHighlight>
                     <DateTimePicker
                         isVisible={this.state.isDateInitialVisible}
@@ -100,9 +100,9 @@ export class EventRegistration extends Component {
                         }}
                         onCancel={() => this.setState({ isDateInitialVisible: false })}
                     />
-                    <TouchableHighlight style={styles.btnDate}
+                    <TouchableHighlight underlayColor='#9b9b9b' style={styles.btnDate}
                         onPress={() => this.setState({ isDateFinalVisible: true })}>
-                        <Text>{this.state.selectedDateFinal}</Text>
+                        <Text style={{ fontSize: 16 }}>{this.state.selectedDateFinal}</Text>
                     </TouchableHighlight>
                     <DateTimePicker
                         isVisible={this.state.isDateFinalVisible}
@@ -135,7 +135,7 @@ export class EventRegistration extends Component {
                                     this.props.navigation.dispatch(StackActions.reset({
                                         index: 0,
                                         actions: [
-                                            NavigationActions.navigate({ routeName: 'Menu' })
+                                            NavigationActions.navigate({ routeName: 'Preload' })
                                         ]
                                     }))
                                 },

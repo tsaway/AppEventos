@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 //imports files
-import { EndEvent, SaveEvent } from './../actions/MenuAction'
+import { EndEvent, SaveEvent, GetExpensesRegisted } from './../actions/MenuAction'
 
 export class Menu extends Component {
     constructor(props) {
@@ -24,15 +24,24 @@ export class Menu extends Component {
                         <View style={styles.spaceMenu}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    if (this.props.eventActive == 1) Alert.alert('Aviso', 'Você está em período de evento')
-                                    else if (this.props.eventActive == 0) this.props.navigation.navigate('EventRegistration')
+                                    if (this.props.eventActive == 1)
+                                        Alert.alert('Aviso', 'Você está em período de evento')
+                                    else if (this.props.eventActive == 0)
+                                        this.props.navigation.navigate('EventRegistration')
                                 }}
                                 style={styles.item}>
                                 <Icon name='calendar' size={30} color='#FFF' />
                                 <Text style={styles.itemText}>Cadastro do Evento</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('ReleasesTab')}
+                                onPress={() => {
+                                    if (this.props.eventActive == 1) {
+                                        this.props.GetExpensesRegisted(() =>
+                                            this.props.navigation.navigate('ReleasesTab'))
+                                    }
+                                    else if (this.props.eventActive == 0)
+                                        Alert.alert('Aviso', 'Não é temporada de evento')
+                                }}
                                 style={styles.item}>
                                 <Icon name='arrow-up' size={30} color='#FFF' />
                                 <Text style={styles.itemText}>Lançamentos</Text>
@@ -56,9 +65,9 @@ export class Menu extends Component {
                 </View>
                 <View style={styles.contentBtnMaster}>
                     <TouchableOpacity
-                        onPress={() => this.props.EndEvent((name, city, estado, promoter, dateInitial, dateFinal) => {
+                        onPress={() => this.props.EndEvent((name, city, estado, promoter, dateInitial, dateFinal, releases) => {
                             this.props.bgBtnMasterMenu = '#acacac'
-                            this.props.SaveEvent(name, city, estado, promoter, dateInitial, dateFinal)
+                            this.props.SaveEvent(name, city, estado, promoter, dateInitial, dateFinal, releases)
                         })}
                         style={[styles.btnMaster, { backgroundColor: this.props.bgBtnMasterMenu }]}>
                         <Icon name='cogs' size={30} color='#FFF' />
@@ -127,5 +136,5 @@ const mapStateToProps = state => {
     }
 }
 
-const MenuConnect = connect(mapStateToProps, { EndEvent, SaveEvent })(Menu)
+const MenuConnect = connect(mapStateToProps, { EndEvent, SaveEvent, GetExpensesRegisted })(Menu)
 export default MenuConnect

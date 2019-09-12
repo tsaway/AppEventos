@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native'
 
-export default class ExpensesItem extends Component {
+export default class ExpensesReleasesItem extends Component {
     render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>{this.props.data.name}</Text>
+                <Text style={styles.title}>R${this.props.data.value}</Text>
                 <TouchableHighlight underlayColor='transparent'
                     onPress={() => this.props.deleteItem(this.props.data.key)}>
                     <Text style={styles.txt}>x</Text>
