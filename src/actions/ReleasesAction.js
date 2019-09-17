@@ -24,7 +24,7 @@ export const SendExpenses = (name, value, callback) => {
         let nameRegisted = '';
         let valueRegisted = 0;
 
-        let valueConverted = value.replace(',', '.').replace('.', '');
+        let valueConverted = value.replace('.', '').replace(',', '.');
         valueConverted = parseFloat(valueConverted);
 
         // varrer todas as despesas registradas do evento atual
@@ -49,13 +49,18 @@ export const SendExpenses = (name, value, callback) => {
         if (value != '' && name != 'Selecione uma despesa') {
             // não precisa do name != 'selecione uma despesa'
             if (nameRegisted != '') {
-                const valueTotal = valueConverted + valueRegisted;
+                let valueTotal = valueConverted + valueRegisted;
                 dir.child(keyRegisted)
                     .set({ name, value: valueTotal })
                     .then(() => {
+                        valueTotal = valueTotal.toString();
+                        const valueTotalConverted = valueTotal.replace(
+                            '.',
+                            ','
+                        );
                         Alert.alert(
                             'Ação realizada',
-                            `R$${valueConverted} adicionado!\nDespesa atual de ${name}: R$${valueTotal}`
+                            `R$${value} adicionado!\nDespesa atual de ${name}: R$${valueTotalConverted}`
                         );
                         callback();
                     })
@@ -204,12 +209,35 @@ export const SendSales = (money, cardDebit, cardCredit, date, callback) => {
                                             cardDebit: cardDebitConverted,
                                             date,
                                         })
-                                        .then(() => {
-                                            Alert.alert(
-                                                'Ação realizada',
-                                                'Lançamento bem sucedido!'
-                                            );
-                                            callback();
+                                        .then(async () => {
+                                            let profitCurrent = 0;
+                                            let dirProfit = firebase
+                                                .database()
+                                                .ref('app')
+                                                .child('eventCurrent')
+                                                .child('releases')
+                                                .child('profit');
+                                            await dirProfit
+                                                .once('value')
+                                                .then(
+                                                    snapshot =>
+                                                        (profitCurrent = snapshot.val()
+                                                            .profit)
+                                                );
+                                            let gain =
+                                                moneyConverted +
+                                                cardCreditConverted +
+                                                cardDebitConverted;
+                                            let profit = gain + profitCurrent;
+                                            dirProfit
+                                                .set({ profit })
+                                                .then(() => {
+                                                    Alert.alert(
+                                                        'Ação realizada',
+                                                        'Lançamento bem sucedido!'
+                                                    );
+                                                    callback();
+                                                });
                                         })
                                         .catch(e =>
                                             Alert.alert(
@@ -228,12 +256,32 @@ export const SendSales = (money, cardDebit, cardCredit, date, callback) => {
                             cardDebit: cardDebitConverted,
                             date,
                         })
-                        .then(() => {
-                            Alert.alert(
-                                'Ação realizada',
-                                'Lançamento bem sucedido!'
-                            );
-                            callback();
+                        .then(async () => {
+                            let profitCurrent = 0;
+                            let dirProfit = firebase
+                                .database()
+                                .ref('app')
+                                .child('eventCurrent')
+                                .child('releases')
+                                .child('profit');
+                            await dirProfit
+                                .once('value')
+                                .then(
+                                    snapshot =>
+                                        (profitCurrent = snapshot.val().profit)
+                                );
+                            let gain =
+                                moneyConverted +
+                                cardCreditConverted +
+                                cardDebitConverted;
+                            let profit = gain + profitCurrent;
+                            dirProfit.set({ profit }).then(() => {
+                                Alert.alert(
+                                    'Ação realizada',
+                                    'Lançamento bem sucedido!'
+                                );
+                                callback();
+                            });
                         })
                         .catch(e =>
                             Alert.alert(

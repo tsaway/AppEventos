@@ -121,7 +121,7 @@ const Browser = createStackNavigator(
         },
     },
     {
-        // initialRouteName: 'EventRegistration'
+        // initialRouteName: 'QueryTab',
     }
 );
 

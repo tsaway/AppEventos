@@ -26,23 +26,15 @@ export const EndEvent = callback => {
                                         dir.child('eventCurrent')
                                             .once('value')
                                             .then(snapshot => {
-                                                const { name } = snapshot.val();
-                                                const { city } = snapshot.val();
                                                 const {
+                                                    name,
+                                                    city,
                                                     estado,
-                                                } = snapshot.val();
-                                                const {
                                                     promoter,
-                                                } = snapshot.val();
-                                                const {
                                                     dateInitial,
-                                                } = snapshot.val();
-                                                const {
                                                     dateFinal,
-                                                } = snapshot.val();
-                                                const {
                                                     releases,
-                                                } = snapshot.val(); // add line
+                                                } = snapshot.val();
                                                 callback(
                                                     name,
                                                     city,

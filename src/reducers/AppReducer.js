@@ -3,6 +3,8 @@ const initialState = {
     bgBtnMasterMenu: '',
     eventActive: 2,
     eventName: '',
+    listCity: [],
+    listPromoter: [],
 };
 
 const AppReducer = (state = initialState, action) => {
@@ -14,7 +16,10 @@ const AppReducer = (state = initialState, action) => {
         return { ...state, eventName: action.payload.eventName };
     if (action.type == 'changeExpensesRegisted')
         return { ...state, expensesRegisted: action.payload.expensesRegisted };
-
+    if (action.type == 'changeListCity')
+        return { ...state, listCity: action.payload.listCity };
+    if (action.type == 'changeListPromoter')
+        return { ...state, listPromoter: action.payload.listPromoter };
     return state;
 };
 

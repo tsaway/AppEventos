@@ -220,13 +220,26 @@ export const RegisterEvent = (
                             releases: 'expenses, sales, productsFinal',
                         })
                         .then(() => {
-                            Keyboard.dismiss();
-                            Alert.alert(
-                                'Ação realizada',
-                                'Cadastro bem sucedido!'
-                            );
-                            callbackSpinner();
-                            callback();
+                            dir.child('eventCurrent')
+                                .child('releases')
+                                .child('profit')
+                                .set({ profit: 0 })
+                                .then(() => {
+                                    Keyboard.dismiss();
+                                    Alert.alert(
+                                        'Ação realizada',
+                                        'Cadastro bem sucedido!'
+                                    );
+                                    callbackSpinner();
+                                    callback();
+                                })
+                                .catch(e => {
+                                    callbackSpinner();
+                                    Alert.alert(
+                                        'Error - Relate ao desenvolvedor',
+                                        `Error: ${e}`
+                                    );
+                                });
                         })
                         .catch(e => {
                             callbackSpinner();

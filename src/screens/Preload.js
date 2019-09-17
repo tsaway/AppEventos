@@ -1,27 +1,34 @@
 // imports libraries/API's
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground } from 'react-native';
+import { StyleSheet, ImageBackground, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { StackActions, NavigationActions } from 'react-navigation';
 
 // imports files
 import {
     ListinerEventActive,
-    GetExpensesRegisted,
+    ListCity,
+    ListPromoter,
 } from '../actions/PreloadAction';
 
 export class Preload extends Component {
     componentDidMount() {
-        this.props.ListinerEventActive(() => {
-            this.props.navigation.dispatch(
-                StackActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({ routeName: 'Menu' }),
-                    ],
+        this.props.ListinerEventActive(() =>
+            this.props.ListCity(() =>
+                this.props.ListPromoter(() => {
+                    this.props.navigation.dispatch(
+                        StackActions.reset({
+                            index: 0,
+                            actions: [
+                                NavigationActions.navigate({
+                                    routeName: 'Menu',
+                                }),
+                            ],
+                        })
+                    );
                 })
-            );
-        });
+            )
+        );
     }
 
     render() {
@@ -29,7 +36,13 @@ export class Preload extends Component {
             <ImageBackground
                 source={require('./../assets/images/bg.png')}
                 style={styles.bg}
-            />
+            >
+                <Image
+                    resizeMode="contain"
+                    source={require('./../assets/images/logo.png')}
+                    style={styles.img}
+                />
+            </ImageBackground>
         );
     }
 }
@@ -38,6 +51,11 @@ const styles = StyleSheet.create({
     bg: {
         flex: 1,
         backgroundColor: 'transparent',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    img: {
+        width: '90%',
     },
 });
 
@@ -50,6 +68,6 @@ const mapStateToProps = state => {
 
 const PreloadConnect = connect(
     mapStateToProps,
-    { ListinerEventActive, GetExpensesRegisted }
+    { ListinerEventActive, ListCity, ListPromoter }
 )(Preload);
 export default PreloadConnect;
