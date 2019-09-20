@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     img: {
-        width: '90%',
+        width: '70%',
     },
 });
 

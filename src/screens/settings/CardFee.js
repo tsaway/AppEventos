@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TouchableHighlight,
     TextInput,
+    ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -34,10 +35,12 @@ export class CardFee extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.txtTitle}>
-                    Adicione abaixo as novas taxas de crédito e débito
-                </Text>
+            <ScrollView style={styles.scrollMain}>
+                <View style={styles.header}>
+                    <Text style={styles.txtTitle}>
+                        Adicione abaixo as novas taxas de crédito e débito
+                    </Text>
+                </View>
                 <View style={styles.control}>
                     <TextInput
                         placeholderTextColor="#9b9b9b"
@@ -73,20 +76,25 @@ export class CardFee extends Component {
                         <Text style={styles.txtBtn}>Reajustar</Text>
                     </TouchableHighlight>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
+    scrollMain: {
         flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'center',
+    },
+    header: {
+        width: '100%',
+        marginTop: 20,
     },
     control: {
         width: '100%',
         alignItems: 'center',
+        marginTop: 50,
+        paddingVertical: 10,
+        marginBottom: 20,
     },
     input: {
         backgroundColor: 'rgba(200, 200, 200, 0.3)',
@@ -100,8 +108,8 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: '#4E5EDE',
-        width: '90%',
-        height: 50,
+        width: '70%',
+        height: 40,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     txtTitle: {
-        fontSize: 24,
+        fontSize: 20,
         textAlign: 'center',
     },
 });

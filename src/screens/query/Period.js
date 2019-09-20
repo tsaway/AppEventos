@@ -7,6 +7,7 @@ import {
     TouchableHighlight,
     Modal,
     FlatList,
+    ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -17,7 +18,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { QueryPeriod } from './../../actions/QueryAction';
 
 //imports components
-import PeriodItem from './components/PeriodItem';
+import QueryItem from './components/QueryItem';
 
 export class Period extends Component {
     constructor(props) {
@@ -37,10 +38,12 @@ export class Period extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>
-                    Consultar os eventos por período
-                </Text>
+            <ScrollView style={styles.scrollMain}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>
+                        Consultar os eventos por período
+                    </Text>
+                </View>
                 <View style={styles.control}>
                     <TouchableHighlight
                         underlayColor="#9b9b9b"
@@ -109,7 +112,11 @@ export class Period extends Component {
                                         isModalVisible: true,
                                         query,
                                     });
-                                }
+                                },
+                                () =>
+                                    this.setState({
+                                        isLoadQueryPeriod: false,
+                                    })
                             );
                         }}
                     >
@@ -142,33 +149,37 @@ export class Period extends Component {
                         </Text>
                         <FlatList
                             data={this.state.query}
-                            renderItem={({ item }) => (
-                                <PeriodItem data={item} />
-                            )}
+                            renderItem={({ item }) => <QueryItem data={item} />}
                         />
                     </View>
                 </Modal>
-            </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
+    scrollMain: {
         flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'center',
     },
-    title: {
-        fontSize: 24,
-        textAlign: 'center',
+    header: {
+        width: '100%',
+        marginTop: 20,
     },
     control: {
         width: '100%',
         alignItems: 'center',
+        marginTop: 50,
+        paddingVertical: 10,
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: 20,
+        textAlign: 'center',
     },
     btnDate: {
-        backgroundColor: 'rgba(200, 200, 200, 0.3)',
+        backgroundColor: 'rgba(92, 134, 225, 0.3)',
+        borderRadius: 10,
         width: '80%',
         height: 50,
         justifyContent: 'center',
@@ -177,8 +188,8 @@ const styles = StyleSheet.create({
     },
     btnMaster: {
         backgroundColor: '#4E5EDE',
-        width: '90%',
-        height: 50,
+        width: '70%',
+        height: 45,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',

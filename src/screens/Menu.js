@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     ImageBackground,
     Alert,
+    ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -32,75 +33,69 @@ export class Menu extends Component {
                 source={require('./../assets/images/bg.png')}
                 style={styles.bg}
             >
-                <View style={styles.container}>
+                <View style={styles.menu}>
                     <View style={styles.row}>
-                        <View style={styles.spaceMenu}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (this.props.eventActive == 1)
-                                        Alert.alert(
-                                            'Aviso',
-                                            'Você está em período de evento'
-                                        );
-                                    else if (this.props.eventActive == 0)
-                                        this.props.navigation.navigate(
-                                            'EventRegistration'
-                                        );
-                                }}
-                                style={styles.item}
-                            >
-                                <Icon name="calendar" size={30} color="#FFF" />
-                                <Text style={styles.itemText}>
-                                    Cadastro do Evento
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (this.props.eventActive == 1) {
-                                        this.props.GetExpensesRegisted(() =>
-                                            this.props.navigation.navigate(
-                                                'ReleasesTab'
-                                            )
-                                        );
-                                    } else if (this.props.eventActive == 0)
-                                        Alert.alert(
-                                            'Aviso',
-                                            'Não é temporada de evento'
-                                        );
-                                }}
-                                style={styles.item}
-                            >
-                                <Icon name="arrow-up" size={30} color="#FFF" />
-                                <Text style={styles.itemText}>Lançamentos</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.spaceMenu}>
-                            <TouchableOpacity
-                                onPress={() =>
-                                    this.props.navigation.navigate('QueryTab')
-                                }
-                                style={styles.item}
-                            >
-                                <Icon name="search" size={30} color="#FFF" />
-                                <Text style={styles.itemText}>Consultas</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() =>
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (this.props.eventActive == 1)
+                                    Alert.alert(
+                                        'Aviso',
+                                        'Você está em período de evento'
+                                    );
+                                else if (this.props.eventActive == 0)
                                     this.props.navigation.navigate(
-                                        'SettingsTab'
-                                    )
-                                }
-                                style={styles.item}
-                            >
-                                <Icon name="cogs" size={30} color="#FFF" />
-                                <Text style={styles.itemText}>
-                                    Configurações
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                                        'EventRegistration'
+                                    );
+                            }}
+                            style={styles.item}
+                        >
+                            <Icon name="calendar" size={30} color="#FFF" />
+                            <Text style={styles.itemText}>
+                                Cadastro do Evento
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (this.props.eventActive == 1) {
+                                    this.props.GetExpensesRegisted(() =>
+                                        this.props.navigation.navigate(
+                                            'ReleasesTab'
+                                        )
+                                    );
+                                } else if (this.props.eventActive == 0)
+                                    Alert.alert(
+                                        'Aviso',
+                                        'Não é temporada de evento'
+                                    );
+                            }}
+                            style={styles.item}
+                        >
+                            <Icon name="arrow-up" size={30} color="#FFF" />
+                            <Text style={styles.itemText}>Lançamentos</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.row, { marginVertical: 10 }]}>
+                        <TouchableOpacity
+                            onPress={() =>
+                                this.props.navigation.navigate('QueryTab')
+                            }
+                            style={styles.item}
+                        >
+                            <Icon name="search" size={30} color="#FFF" />
+                            <Text style={styles.itemText}>Consultas</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() =>
+                                this.props.navigation.navigate('SettingsTab')
+                            }
+                            style={styles.item}
+                        >
+                            <Icon name="cogs" size={30} color="#FFF" />
+                            <Text style={styles.itemText}>Configurações</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.contentBtnMaster}>
+                <View style={styles.areaBtnMaster}>
                     <TouchableOpacity
                         onPress={() =>
                             this.props.EndEvent(
@@ -131,7 +126,7 @@ export class Menu extends Component {
                             { backgroundColor: this.props.bgBtnMasterMenu },
                         ]}
                     >
-                        <Icon name="cogs" size={30} color="#FFF" />
+                        <Icon name="check" size={30} color="#FFF" />
                         <Text style={styles.itemText}>
                             Finalizar o evento atual
                         </Text>
@@ -146,19 +141,13 @@ const styles = StyleSheet.create({
     bg: {
         flex: 1,
     },
-    container: {
+    menu: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
     row: {
-        height: '50%',
         flexDirection: 'row',
-        paddingHorizontal: 10,
-        marginTop: 10,
-        justifyContent: 'center',
-    },
-    spaceMenu: {
-        justifyContent: 'space-around',
     },
     item: {
         height: 120,
@@ -174,8 +163,9 @@ const styles = StyleSheet.create({
     itemText: {
         color: '#FFF',
     },
-    contentBtnMaster: {
-        justifyContent: 'center',
+    areaBtnMaster: {
+        height: '30%',
+        justifyContent: 'flex-end',
         alignItems: 'center',
     },
     btnMaster: {

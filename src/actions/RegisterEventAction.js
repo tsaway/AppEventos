@@ -22,23 +22,27 @@ export const RegisterEvent = (
             .push().key;
         let control = 0;
 
-        // //Dados upperCase
+        // Dados upperCase
         const nameInput = name.toUpperCase();
         const cityInput = city.toUpperCase();
         const estadoInput = estado.toUpperCase();
         const promoterInput = promoter.toUpperCase();
 
-        // //Date Initial
+        // Date Initial
         const arrayDateInitial = dateInitial.split('/', 3);
-        const dayInitial = arrayDateInitial[0];
-        const monthInitial = arrayDateInitial[1];
-        const yearInitial = arrayDateInitial[2];
+        const dateInicialConverted = new Date(
+            arrayDateInitial[2],
+            arrayDateInitial[1] - 1,
+            arrayDateInitial[0]
+        );
 
-        // //Date Final
+        // Date Final
         const arrayDateFinal = dateFinal.split('/', 3);
-        const dayFinal = arrayDateFinal[0];
-        const monthFinal = arrayDateFinal[1];
-        const yearFinal = arrayDateFinal[2];
+        const dataFinalConverted = new Date(
+            arrayDateFinal[2],
+            arrayDateFinal[1] - 1,
+            arrayDateFinal[0]
+        );
 
         // pegar os valores das validações
         const validationName = validation[0].name;
@@ -46,11 +50,7 @@ export const RegisterEvent = (
         const validationEstado = validation[2].estado;
         const validationPromoter = validation[3].promoter;
 
-        if (
-            dayFinal >= dayInitial &&
-            monthFinal >= monthInitial &&
-            yearFinal >= yearInitial
-        ) {
+        if (dataFinalConverted >= dateInicialConverted) {
             if (
                 name != '' &&
                 city != '' &&

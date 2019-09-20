@@ -423,12 +423,12 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: '#4E5EDE',
-        width: '90%',
-        height: 50,
+        width: '70%',
+        height: 45,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+        marginVertical: 20,
     },
     btnModal: {
         backgroundColor: '#363636',
@@ -447,7 +447,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     btnDate: {
-        backgroundColor: 'rgba(200, 200, 200, 0.3)',
+        backgroundColor: 'rgba(92, 134, 225, 0.3)',
+        borderRadius: 10,
         width: '80%',
         height: 50,
         justifyContent: 'center',

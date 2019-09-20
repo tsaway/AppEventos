@@ -2,7 +2,7 @@
 import { Alert, Keyboard } from 'react-native';
 import firebase from '../../dep/firebase/FirebaseConnection';
 
-export const QueryPeriod = (dateInit, dateFin, callback) => {
+export const QueryPeriod = (dateInit, dateFin, callback, pauseLoad) => {
     return () => {
         const dir = firebase
             .database()
@@ -12,21 +12,21 @@ export const QueryPeriod = (dateInit, dateFin, callback) => {
 
         //Date Initial
         const arrayDateInitial = dateInit.split('/', 3);
-        const dayInitial = arrayDateInitial[0];
-        const monthInitial = arrayDateInitial[1];
-        const yearInitial = arrayDateInitial[2];
+        const dateInitialConverted = new Date(
+            arrayDateInitial[2],
+            arrayDateInitial[1] - 1,
+            arrayDateInitial[0]
+        );
 
         //Date Final
         const arrayDateFinal = dateFin.split('/', 3);
-        const dayFinal = arrayDateFinal[0];
-        const monthFinal = arrayDateFinal[1];
-        const yearFinal = arrayDateFinal[2];
+        const dateFinalConverted = new Date(
+            arrayDateFinal[2],
+            arrayDateFinal[1] - 1,
+            arrayDateFinal[0]
+        );
 
-        if (
-            dayFinal >= dayInitial &&
-            monthFinal >= monthInitial &&
-            yearFinal >= yearInitial
-        ) {
+        if (dateFinalConverted >= dateInitialConverted) {
             dir.once('value')
                 .then(snapshot => {
                     snapshot.forEach(childItem => {
@@ -38,19 +38,18 @@ export const QueryPeriod = (dateInit, dateFin, callback) => {
                             promoter,
                             dateInitial,
                             dateFinal,
+                            releases,
                         } = childItem.val();
                         //Data inicial de cada item do banco
                         const arrayDateInitialBank = dateInitial.split('/', 3);
-                        const dayI = arrayDateInitialBank[0];
-                        const monthI = arrayDateInitialBank[1];
-                        const yearI = arrayDateInitialBank[2];
+                        const dateInitialBank = new Date(
+                            arrayDateInitialBank[2],
+                            arrayDateInitialBank[1] - 1,
+                            arrayDateInitialBank[0]
+                        );
                         if (
-                            dayI >= dayInitial &&
-                            dayI <= dayFinal &&
-                            monthI >= monthInitial &&
-                            monthI <= monthFinal &&
-                            yearI >= yearInitial &&
-                            yearI <= yearFinal
+                            dateInitialBank >= dateInitialConverted &&
+                            dateInitialBank <= dateFinalConverted
                         ) {
                             query.push({
                                 key,
@@ -60,6 +59,7 @@ export const QueryPeriod = (dateInit, dateFin, callback) => {
                                 promoter,
                                 dateInitial,
                                 dateFinal,
+                                releases,
                             });
                         }
                     });
@@ -71,7 +71,10 @@ export const QueryPeriod = (dateInit, dateFin, callback) => {
                         `Error: ${e}`
                     )
                 );
-        } else Alert.alert('Aviso', 'Verifique se as datas estão corretas!');
+        } else {
+            pauseLoad();
+            Alert.alert('Aviso', 'Verifique se as datas estão corretas!');
+        }
     };
 };
 
@@ -94,6 +97,7 @@ export const QueryCity = (cityInput, callback) => {
                         promoter,
                         dateInitial,
                         dateFinal,
+                        releases,
                     } = childItem.val();
 
                     if (cityInput === city) {
@@ -105,6 +109,7 @@ export const QueryCity = (cityInput, callback) => {
                             promoter,
                             dateInitial,
                             dateFinal,
+                            releases,
                         });
                     }
                 });
@@ -135,6 +140,7 @@ export const QueryPromoter = (promoterInput, callback) => {
                         promoter,
                         dateInitial,
                         dateFinal,
+                        releases,
                     } = childItem.val();
 
                     if (promoterInput === promoter) {
@@ -146,6 +152,7 @@ export const QueryPromoter = (promoterInput, callback) => {
                             promoter,
                             dateInitial,
                             dateFinal,
+                            releases,
                         });
                     }
                 });

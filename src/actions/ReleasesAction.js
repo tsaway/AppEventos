@@ -52,17 +52,42 @@ export const SendExpenses = (name, value, callback) => {
                 let valueTotal = valueConverted + valueRegisted;
                 dir.child(keyRegisted)
                     .set({ name, value: valueTotal })
-                    .then(() => {
-                        valueTotal = valueTotal.toString();
-                        const valueTotalConverted = valueTotal.replace(
-                            '.',
-                            ','
-                        );
-                        Alert.alert(
-                            'Ação realizada',
-                            `R$${value} adicionado!\nDespesa atual de ${name}: R$${valueTotalConverted}`
-                        );
-                        callback();
+                    .then(async () => {
+                        let profitCurrent = 0;
+                        let dirProfit = firebase
+                            .database()
+                            .ref('app')
+                            .child('eventCurrent')
+                            .child('releases')
+                            .child('profit');
+                        await dirProfit
+                            .once('value')
+                            .then(
+                                snapshot =>
+                                    (profitCurrent = snapshot.val().profit)
+                            );
+                        let expenses = valueConverted;
+                        let profit = profitCurrent - expenses;
+                        dirProfit
+                            .set({ profit })
+                            .then(() => {
+                                valueTotal = valueTotal.toString();
+                                const valueTotalConverted = valueTotal.replace(
+                                    '.',
+                                    ','
+                                );
+                                Alert.alert(
+                                    'Ação realizada',
+                                    `R$${value} adicionado!\nDespesa atual de ${name}: R$${valueTotalConverted}`
+                                );
+                                callback();
+                            })
+                            .catch(e =>
+                                Alert.alert(
+                                    'Error - Relate ao desenvolvedor',
+                                    `Error: ${e}`
+                                )
+                            );
                     })
                     .catch(e =>
                         Alert.alert(
@@ -73,12 +98,37 @@ export const SendExpenses = (name, value, callback) => {
             } else {
                 dir.child(key)
                     .set({ name, value: valueConverted })
-                    .then(() => {
-                        Alert.alert(
-                            'Ação realizada',
-                            `O lançamento da despesa "${name}" foi transmitida com sucesso!`
-                        );
-                        callback();
+                    .then(async () => {
+                        let profitCurrent = 0;
+                        let dirProfit = firebase
+                            .database()
+                            .ref('app')
+                            .child('eventCurrent')
+                            .child('releases')
+                            .child('profit');
+                        await dirProfit
+                            .once('value')
+                            .then(
+                                snapshot =>
+                                    (profitCurrent = snapshot.val().profit)
+                            );
+                        let expenses = valueConverted;
+                        let profit = profitCurrent - expenses;
+                        dirProfit
+                            .set({ profit })
+                            .then(() => {
+                                Alert.alert(
+                                    'Ação realizada',
+                                    `O lançamento da despesa "${name}" foi transmitida com sucesso!`
+                                );
+                                callback();
+                            })
+                            .catch(e =>
+                                Alert.alert(
+                                    'Error - Relate ao desenvolvedor',
+                                    `Error: ${e}`
+                                )
+                            );
                     })
                     .catch(e =>
                         Alert.alert(
@@ -211,23 +261,49 @@ export const SendSales = (money, cardDebit, cardCredit, date, callback) => {
                                         })
                                         .then(async () => {
                                             let profitCurrent = 0;
+                                            let arraySale = [];
                                             let dirProfit = firebase
                                                 .database()
                                                 .ref('app')
                                                 .child('eventCurrent')
                                                 .child('releases')
                                                 .child('profit');
+                                            let dirSale = firebase
+                                                .database()
+                                                .ref('app')
+                                                .child('eventCurrent')
+                                                .child('releases')
+                                                .child('sales')
+                                                .child(keyRegisted);
+                                            await dirSale
+                                                .once('value')
+                                                .then(snapshot => {
+                                                    snapshot.forEach(
+                                                        childItem => {
+                                                            arraySale.push({
+                                                                cardCredit: childItem.val()
+                                                                    .cardCredit,
+                                                                cardDebit: childItem.val()
+                                                                    .cardDebit,
+                                                                money: childItem.val()
+                                                                    .money,
+                                                            });
+                                                        }
+                                                    );
+                                                });
                                             await dirProfit
                                                 .once('value')
-                                                .then(
-                                                    snapshot =>
-                                                        (profitCurrent = snapshot.val()
-                                                            .profit)
-                                                );
+                                                .then(snapshot => {
+                                                    profitCurrent = snapshot.val()
+                                                        .profit;
+                                                });
                                             let gain =
                                                 moneyConverted +
                                                 cardCreditConverted +
-                                                cardDebitConverted;
+                                                cardDebitConverted -
+                                                (arraySale.cardCredit +
+                                                    arraySale.cardDebit +
+                                                    arraySale.money);
                                             let profit = gain + profitCurrent;
                                             dirProfit
                                                 .set({ profit })

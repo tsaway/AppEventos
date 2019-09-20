@@ -13,8 +13,6 @@ import {
     ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import moment from 'moment';
 
 // imports files
 import {
@@ -40,92 +38,88 @@ export class ProductsFinal extends Component {
     render() {
         return (
             <ScrollView style={styles.scrollMain}>
-                <View style={styles.container}>
-                    <Text style={styles.txtTitle}>{this.props.eventName}</Text>
-                    <View style={styles.control}>
-                        <TextInput
-                            placeholderTextColor="#9b9b9b"
-                            placeholder="Nome: "
-                            value={this.state.name}
-                            style={styles.input}
-                            onChangeText={txt => this.setState({ name: txt })}
-                        />
-                        <TextInput
-                            keyboardType="numeric"
-                            placeholderTextColor="#9b9b9b"
-                            placeholder="Quantidade: "
-                            value={this.state.qtd}
-                            style={styles.input}
-                            onChangeText={txt => this.setState({ qtd: txt })}
-                        />
+                <View style={styles.header}>
+                    <Text style={styles.txtTitle}>
+                        Evento {this.props.eventName}
+                    </Text>
+                </View>
+                <View style={styles.control}>
+                    <TextInput
+                        placeholderTextColor="#9b9b9b"
+                        placeholder="Nome: "
+                        value={this.state.name}
+                        style={styles.input}
+                        onChangeText={txt => this.setState({ name: txt })}
+                    />
+                    <TextInput
+                        keyboardType="numeric"
+                        placeholderTextColor="#9b9b9b"
+                        placeholder="Quantidade: "
+                        value={this.state.qtd}
+                        style={styles.input}
+                        onChangeText={txt => this.setState({ qtd: txt })}
+                    />
+                    <TouchableHighlight
+                        onPress={() =>
+                            this.props.SendProductsFinal(
+                                this.state.name,
+                                this.state.qtd,
+                                () => this.setState({ name: '', qtd: '' })
+                            )
+                        }
+                        underlayColor="#5FC7EA"
+                        style={styles.btn}
+                    >
+                        <Text style={styles.txtBtn}>Registrar produtos</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        onPress={() =>
+                            this.props.GetListReleaseProductsFinal(list =>
+                                this.setState({
+                                    list,
+                                    isModalVisible: true,
+                                })
+                            )
+                        }
+                        underlayColor="#5FC7EA"
+                        style={styles.btn}
+                    >
+                        <Text style={styles.txtBtn}>Listar produtos</Text>
+                    </TouchableHighlight>
+                </View>
+                {/* --------- Modal Listar produtos registrados no evento atual --------- */}
+                <Modal
+                    animationType="slide"
+                    visible={this.state.isModalVisible}
+                >
+                    <View style={styles.exit}>
                         <TouchableHighlight
                             onPress={() =>
-                                this.props.SendProductsFinal(
-                                    this.state.name,
-                                    this.state.qtd,
-                                    () => this.setState({ name: '', qtd: '' })
-                                )
+                                this.setState({ isModalVisible: false })
                             }
-                            underlayColor="#5FC7EA"
-                            style={styles.btn}
+                            underlayColor="transparent"
                         >
-                            <Text style={styles.txtBtn}>
-                                Registrar produtos
-                            </Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={() =>
-                                this.props.GetListReleaseProductsFinal(list =>
-                                    this.setState({
-                                        list,
-                                        isModalVisible: true,
-                                    })
-                                )
-                            }
-                            underlayColor="#5FC7EA"
-                            style={styles.btn}
-                        >
-                            <Text style={styles.txtBtn}>
-                                Verificar lista de produtos
-                            </Text>
+                            <Text style={{ fontSize: 18 }}>X</Text>
                         </TouchableHighlight>
                     </View>
-                    {/* --------- Modal Listar produtos registrados no evento atual --------- */}
-                    <Modal
-                        animationType="slide"
-                        visible={this.state.isModalVisible}
-                    >
-                        <View style={styles.exit}>
-                            <TouchableHighlight
-                                onPress={() =>
-                                    this.setState({ isModalVisible: false })
-                                }
-                                underlayColor="transparent"
-                            >
-                                <Text style={{ fontSize: 18 }}>X</Text>
-                            </TouchableHighlight>
-                        </View>
-                        <View style={styles.modal}>
-                            <Text
-                                style={[styles.txtTitle, { marginBottom: 15 }]}
-                            >
-                                Produtos Registrados
-                            </Text>
-                            <FlatList
-                                data={this.state.list}
-                                renderItem={({ item }) => (
-                                    <ProductsFinalReleasesItem
-                                        data={item}
-                                        deleteItem={
-                                            this.props
-                                                .DeleteItemReleaseProductsFinal
-                                        }
-                                    />
-                                )}
-                            />
-                        </View>
-                    </Modal>
-                </View>
+                    <View style={styles.modal}>
+                        <Text style={[styles.txtTitle, { marginBottom: 15 }]}>
+                            Produtos Registrados
+                        </Text>
+                        <FlatList
+                            data={this.state.list}
+                            renderItem={({ item }) => (
+                                <ProductsFinalReleasesItem
+                                    data={item}
+                                    deleteItem={
+                                        this.props
+                                            .DeleteItemReleaseProductsFinal
+                                    }
+                                />
+                            )}
+                        />
+                    </View>
+                </Modal>
             </ScrollView>
         );
     }
@@ -135,16 +129,16 @@ const styles = StyleSheet.create({
     scrollMain: {
         flex: 1,
     },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
+    header: {
+        width: '100%',
+        marginTop: 20,
     },
     control: {
         width: '100%',
         alignItems: 'center',
         marginTop: 50,
+        paddingVertical: 10,
+        marginBottom: 20,
     },
     input: {
         backgroundColor: 'rgba(200, 200, 200, 0.3)',
@@ -158,8 +152,8 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: '#4E5EDE',
-        width: '90%',
-        height: 50,
+        width: '70%',
+        height: 45,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
@@ -170,7 +164,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     txtTitle: {
-        fontSize: 24,
+        fontSize: 20,
         textAlign: 'center',
     },
     exit: {

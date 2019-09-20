@@ -8,6 +8,7 @@ import {
     TouchableHighlight,
     Modal,
     FlatList,
+    ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -16,7 +17,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { QueryPromoter } from './../../actions/QueryAction';
 
 //imports components
-import PromoterItem from './components/PromoterItem';
+import QueryItem from './components/QueryItem';
 
 export class Promoter extends Component {
     constructor(props) {
@@ -35,10 +36,12 @@ export class Promoter extends Component {
         });
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>
-                    Consultar os eventos por promotora
-                </Text>
+            <ScrollView style={styles.scrollMain}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>
+                        Consultar os eventos por promotora
+                    </Text>
+                </View>
                 <View style={styles.control}>
                     <Picker
                         selectedValue={this.state.pickerValuePromoter}
@@ -98,35 +101,38 @@ export class Promoter extends Component {
                         </Text>
                         <FlatList
                             data={this.state.query}
-                            renderItem={({ item }) => (
-                                <PromoterItem data={item} />
-                            )}
+                            renderItem={({ item }) => <QueryItem data={item} />}
                         />
                     </View>
                 </Modal>
-            </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
+    scrollMain: {
         flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'center',
     },
-    title: {
-        fontSize: 24,
-        textAlign: 'center',
+    header: {
+        width: '100%',
+        marginTop: 20,
     },
     control: {
         width: '100%',
         alignItems: 'center',
+        marginTop: 50,
+        paddingVertical: 10,
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: 20,
+        textAlign: 'center',
     },
     btnMaster: {
         backgroundColor: '#4E5EDE',
-        width: '90%',
-        height: 50,
+        width: '70%',
+        height: 45,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
